@@ -37,7 +37,7 @@ input,select{
 }
 input[type="range"]{height:40px;padding:0;background:transparent}
 
-/* 右下角悬浮微信按钮 */
+/* 右下角悬浮微信 */
 .float-wx{
   position:fixed;right:20px;bottom:20px;
   width:60px;height:60px;border-radius:50%;
@@ -45,6 +45,15 @@ input[type="range"]{height:40px;padding:0;background:transparent}
   display:flex;align-items:center;justify-content:center;
   font-size:24px;box-shadow:0 4px 12px rgba(0,0,0,0.3);
   cursor:pointer;z-index:999
+}
+/* 悬浮球关闭按钮 */
+.float-close{
+  position:fixed;right:25px;bottom:85px;
+  width:26px;height:26px;border-radius:50%;
+  background:#333;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;cursor:pointer;z-index:999;
+  display:none;
 }
 
 /* 5秒自动弹窗 */
@@ -79,7 +88,14 @@ input[type="range"]{height:40px;padding:0;background:transparent}
   overflow:hidden;z-index:998;font-size:14px
 }
 .chat-head{
-  background:#07C160;color:#fff;padding:12px;text-align:center;font-weight:bold
+  background:#07C160;color:#fff;padding:12px;text-align:center;font-weight:bold;
+  position:relative
+}
+/* 聊天窗口关闭按钮 */
+.chat-close{
+  position:absolute;right:10px;top:8px;
+  background:transparent;border:none;color:#fff;
+  font-size:16px;cursor:pointer
 }
 .chat-body{padding:12px;max-height:280px;overflow-y:auto}
 .msg{margin-bottom:10px;max-width:80%}
@@ -151,8 +167,11 @@ input[type="range"]{height:40px;padding:0;background:transparent}
 </section>
 
 <!-- 模拟客服聊天 -->
-<div class="chat-box">
-  <div class="chat-head">星迈寰宇 - 客服</div>
+<div class="chat-box" id="chatBox">
+  <div class="chat-head">
+    星迈寰宇 - 客服
+    <button class="chat-close" onclick="closeChat()">×</button>
+  </div>
   <div class="chat-body">
     <div class="msg bot">你好，有什么可以帮您？</div>
     <div class="msg user">到美国运费多少？</div>
@@ -160,8 +179,11 @@ input[type="range"]{height:40px;padding:0;background:transparent}
   </div>
 </div>
 
+<!-- 悬浮球关闭按钮 -->
+<div class="float-close" id="floatClose" onclick="hideFloat()">×</div>
+
 <!-- 右下角悬浮微信 -->
-<div class="float-wx" onclick="showPopup()">💬</div>
+<div class="float-wx" id="floatBtn" onclick="showPopup()">💬</div>
 
 <!-- 5秒自动弹窗 -->
 <div class="popup" id="popup">
@@ -189,6 +211,17 @@ function showPopup(){
 }
 function closePopup(){
   document.getElementById('popup').style.display='none'
+}
+
+// 关闭模拟聊天
+function closeChat(){
+  document.getElementById('chatBox').style.display='none'
+}
+
+// 隐藏悬浮微信按钮
+function hideFloat(){
+  document.getElementById('floatBtn').style.display='none'
+  document.getElementById('floatClose').style.display='none'
 }
 
 // 复制微信号
