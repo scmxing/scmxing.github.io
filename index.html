@@ -2,142 +2,89 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<!-- 核心：移动端视口适配（必须保留） -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>星迈寰宇供应链 XingMai Global</title>
-
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,"Microsoft YaHei",sans-serif;background:#f5f0e8;color:#111;line-height:1.6}
+section{padding:40px 16px;max-width:100%;margin:0 auto}
+h1{font-size:24px;margin-bottom:12px}
+h2{font-size:20px;margin-bottom:12px}
+h3{font-size:18px;margin-top:15px}
+p,li{font-size:15px;margin-bottom:8px}
+ul{padding-left:20px}
+
+.btn{
+  background:#d63a2f;color:#fff;padding:14px 20px;border-radius:8px;
+  text-decoration:none;display:inline-block;width:100%;text-align:center;
+  font-size:16px;border:none;cursor:pointer;margin-top:10px
+}
+.btn-wa{background:#25D366 !important}
+.btn-wx{background:#07C160 !important}
+
+.stats{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  background:#111;color:#fff;text-align:center
+}
+.stat{padding:25px 10px;border-bottom:1px solid #333}
+.stat:nth-last-child(1),.stat:nth-last-child(2){border-bottom:none}
+.stat-num{font-size:24px;color:#c8952a;font-weight:bold}
+
+.quote{background:#111;color:#fff;padding-top:30px;padding-bottom:30px}
+input,select{
+  width:100%;padding:14px;margin:10px 0;
+  border-radius:8px;border:none;font-size:16px
+}
+input[type="range"]{height:40px;padding:0;background:transparent}
+
+/* 右下角悬浮微信按钮 */
+.float-wx{
+  position:fixed;right:20px;bottom:20px;
+  width:60px;height:60px;border-radius:50%;
+  background:#07C160;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;box-shadow:0 4px 12px rgba(0,0,0,0.3);
+  cursor:pointer;z-index:999
 }
 
-body {
-  font-family: Arial, "Microsoft YaHei", sans-serif;
-  background: #f5f0e8;
-  color: #111;
-  line-height: 1.6;
-  /* 移动端文字优化 */
-  -webkit-text-size-adjust: 100%;
+/* 5秒自动弹窗 */
+.popup{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;
+  z-index:9999;padding:20px;display:none
+}
+.popup-box{
+  background:#fff;border-radius:12px;max-width:380px;width:100%;
+  padding:24px;text-align:center
+}
+.popup-box img{
+  width:160px;height:160px;object-fit:cover;
+  border:1px solid #eee;border-radius:8px;margin:10px auto;display:block
+}
+.popup-btns{display:flex;gap:10px;margin-top:15px}
+.popup-btns .btn{flex:1;margin-top:0}
+.copy-wx{
+  background:#f0f0f0;color:#333;padding:10px;border-radius:8px;
+  margin:10px 0;cursor:pointer;font-weight:bold
+}
+.close{
+  background:#ddd;color:#333;padding:10px;width:100%;
+  border:none;border-radius:8px;margin-top:10px;cursor:pointer
 }
 
-/* 移动端通用间距 */
-section {
-  padding: 40px 16px;
-  max-width: 100%;
-  width: 100%;
-  margin: 0 auto;
+/* 模拟客服聊天窗口 */
+.chat-box{
+  position:fixed;right:20px;bottom:90px;width:280px;
+  background:#fff;border-radius:12px;box-shadow:0 5px 20px rgba(0,0,0,0.15);
+  overflow:hidden;z-index:998;font-size:14px
 }
-
-h1 {
-  font-size: 24px;
-  margin-bottom: 12px;
-  line-height: 1.3;
+.chat-head{
+  background:#07C160;color:#fff;padding:12px;text-align:center;font-weight:bold
 }
-
-h2 {
-  font-size: 20px;
-  margin-bottom: 12px;
-}
-
-h3 {
-  font-size: 18px;
-  margin-top: 15px;
-}
-
-p {
-  margin-bottom: 10px;
-  font-size: 15px;
-}
-
-ul {
-  padding-left: 20px;
-  margin: 10px 0;
-}
-
-li {
-  margin-bottom: 6px;
-  font-size: 15px;
-}
-
-/* 移动端按钮优化 */
-.btn {
-  background: #d63a2f;
-  color: #fff;
-  padding: 14px 20px;
-  text-decoration: none;
-  display: inline-block;
-  border-radius: 6px;
-  text-align: center;
-  font-size: 16px;
-  width: 100%;
-  border: none;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-/* 数据统计移动端自适应网格 */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  background: #111;
-  color: #fff;
-  text-align: center;
-}
-
-.stat {
-  padding: 25px 10px;
-  border-bottom: 1px solid #333;
-}
-
-/* 去掉最后一行边框 */
-.stat:nth-last-child(1),.stat:nth-last-child(2){
-  border-bottom: none;
-}
-
-.stat-num {
-  font-size: 24px;
-  color: #c8952a;
-  font-weight: bold;
-  margin-bottom: 4px;
-}
-
-/* 报价表单区域 */
-.quote {
-  background: #111;
-  color: #fff;
-}
-
-input, select {
-  width: 100%;
-  padding: 14px;
-  margin: 10px 0;
-  border-radius: 6px;
-  border: none;
-  font-size: 16px;
-  background: #fff;
-  color: #111;
-}
-
-/* 滑块样式优化 */
-input[type="range"] {
-  height: 40px;
-  padding: 0;
-  background: transparent;
-}
-
-/* WhatsApp按钮 */
-#wa {
-  background: #25D366 !important;
-  display: none;
-}
-
-/* 联系信息 */
-.contact p {
-  margin: 6px 0;
-  word-break: break-all;
-}
+.chat-body{padding:12px;max-height:280px;overflow-y:auto}
+.msg{margin-bottom:10px;max-width:80%}
+.bot{background:#f0f0f0;padding:8px 12px;border-radius:12px 12px 12px 4px}
+.user{margin-left:auto;background:#e1f5e9;padding:8px 12px;border-radius:12px 12px 4px 12px}
 </style>
 </head>
 
@@ -150,7 +97,7 @@ input[type="range"] {
   <a href="#quote" class="btn">获取报价</a>
 </section>
 
-<!-- STATS 移动端2列布局 -->
+<!-- 数据 -->
 <div class="stats">
   <div class="stat"><div class="stat-num">80+</div>国家</div>
   <div class="stat"><div class="stat-num">35,000+</div>订单</div>
@@ -158,26 +105,23 @@ input[type="range"] {
   <div class="stat"><div class="stat-num">3年+</div>经验</div>
 </div>
 
-<!-- SERVICES -->
+<!-- 服务 -->
 <section>
   <h2>核心服务</h2>
   <ul>
-    <li>国际物流（空运 / 海运 / 电商专线）</li>
-    <li>中国代采（1688 / 工厂 / OEM）</li>
+    <li>国际物流（空运/海运/电商专线）</li>
+    <li>中国代采（1688/工厂/OEM）</li>
     <li>验货质检</li>
     <li>仓储集货</li>
   </ul>
 </section>
 
-<!-- QUOTE CALCULATOR -->
+<!-- 报价计算器 -->
 <section class="quote" id="quote">
   <h2>获取运费报价</h2>
-
   <select id="country">
-    <option value="usa">美国</option>
-    <option value="uk">英国</option>
-    <option value="uae">阿联酋</option>
-    <option value="au">澳大利亚</option>
+    <option value="usa">美国</option><option value="uk">英国</option>
+    <option value="uae">阿联酋</option><option value="au">澳大利亚</option>
     <option value="de">德国</option>
   </select>
 
@@ -185,45 +129,93 @@ input[type="range"] {
   <p>重量：<span id="w">10</span> kg</p>
 
   <select id="type">
-    <option value="air">空运</option>
-    <option value="sea">海运</option>
+    <option value="air">空运</option><option value="sea">海运</option>
   </select>
 
   <button onclick="calc()" class="btn">计算报价</button>
   <h3 id="price"></h3>
 
-  <a id="wa" target="_blank" class="btn">
-    WhatsApp 获取精准报价
-  </a>
+  <div class="popup-btns">
+    <a id="wa" target="_blank" class="btn btn-wa" style="display:none">WhatsApp 询价</a>
+    <a id="wx" class="btn btn-wx" style="display:none" onclick="copyWx()">微信 精准报价</a>
+  </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact">
+<!-- 联系 -->
+<section>
   <h2>联系我们</h2>
+  <p>微信：LYu6Yu（主号）</p>
   <p>WhatsApp: +86 19842722052</p>
-  <p>Email: support@scmxing.com</p>
+  <p>邮箱: support@scmxing.com</p>
   <p>地址：深圳市龙华区明治街道大为商务时空B座303室</p>
 </section>
 
+<!-- 模拟客服聊天 -->
+<div class="chat-box">
+  <div class="chat-head">星迈寰宇 - 客服</div>
+  <div class="chat-body">
+    <div class="msg bot">你好，有什么可以帮您？</div>
+    <div class="msg user">到美国运费多少？</div>
+    <div class="msg bot">加微信发最新底价与时效表~</div>
+  </div>
+</div>
+
+<!-- 右下角悬浮微信 -->
+<div class="float-wx" onclick="showPopup()">💬</div>
+
+<!-- 5秒自动弹窗 -->
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <h2>添加微信 · 立即底价</h2>
+    <p>添加即可获取最新报价单</p>
+    <img src="https://picsum.photos/200/200" alt="微信二维码" />
+    <div class="copy-wx" onclick="copyWx()">微信号：LYu6Yu（点击复制）</div>
+    <div class="popup-btns">
+      <a class="btn btn-wx" onclick="copyWx()">复制微信</a>
+      <a href="https://wa.me/8619842722052" target="_blank" class="btn btn-wa">WhatsApp</a>
+    </div>
+    <button class="close" onclick="closePopup()">稍后再说</button>
+  </div>
+</div>
+
 <script>
+// 5秒自动弹窗
+setTimeout(()=>{
+  document.getElementById('popup').style.display='flex'
+},5000)
+
+function showPopup(){
+  document.getElementById('popup').style.display='flex'
+}
+function closePopup(){
+  document.getElementById('popup').style.display='none'
+}
+
+// 复制微信号
+function copyWx(){
+  const wx = "LYu6Yu";
+  navigator.clipboard.writeText(wx).then(()=>{
+    alert("已复制微信号："+wx+"\n请打开微信添加好友");
+  });
+}
+
+// 报价计算
 function calc(){
-  let w = document.getElementById('weight').value
-  let c = document.getElementById('country').value
-  let t = document.getElementById('type').value
+  let w=document.getElementById('weight').value
+  let c=document.getElementById('country').value
+  let t=document.getElementById('type').value
 
-  let air = {usa:45,uk:42,uae:38,au:40,de:43}
-  let sea = {usa:12,uk:11,uae:10,au:11,de:12}
+  let air={usa:45,uk:42,uae:38,au:40,de:43}
+  let sea={usa:12,uk:11,uae:10,au:11,de:12}
+  let p=Math.round(t=='air'?w*air[c]:w*sea[c])
 
-  let p = t==='air' ? w*air[c] : w*sea[c]
-  p = Math.round(p)
+  document.getElementById('price').innerText="预估价格：￥"+p
+  document.getElementById('wa').style.display='inline-block'
+  document.getElementById('wx').style.display='inline-block'
 
-  document.getElementById('price').innerText = "预估价格：￥" + p
-
-  let msg = `Quote request: ${c}, ${w}kg, ${t}`
-  document.getElementById('wa').href = "https://wa.me/8619842722052?text=" + encodeURIComponent(msg)
-  document.getElementById('wa').style.display = "inline-block"
+  let msg=`星迈寰宇报价：${c} ${w}kg ${t=='air'?'空运':'海运'} 预估￥${p}`
+  document.getElementById('wa').href="https://wa.me/8619842722052?text="+encodeURIComponent(msg)
 }
 </script>
-
 </body>
 </html>
